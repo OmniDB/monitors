@@ -5,7 +5,7 @@ result = {
         "responsive": True,
         "title":{
             "display":True,
-            "text":"Size: Top 5 Tables"
+            "text":"System Memory Usage (Total: " + total_mem + "MB)"
         },
         "tooltips": {
             "mode": "index",
@@ -27,7 +27,11 @@ result = {
                 "display": True,
                 "scaleLabel": {
                     "display": True,
-                    "labelString": "Size (MB)"
+                    "labelString": "%",
+                },
+                "ticks": {
+                    "beginAtZero": True,
+                    "max": 100
                 }
             }]
         }

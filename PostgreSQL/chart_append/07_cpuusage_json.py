@@ -1,14 +1,11 @@
 result = {
     "type": "line",
-    "data": {
-        "labels": [datetime.now().strftime('%H:%M:%S')],
-        "datasets": cpu_list
-    },
+    "data": None,
     "options": {
         "responsive": True,
         "title":{
             "display":True,
-            "text":"CPU usage"
+            "text":"CPU Usage"
         },
         "tooltips": {
             "mode": "index",

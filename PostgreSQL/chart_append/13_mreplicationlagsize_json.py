@@ -5,7 +5,7 @@ result = {
         "responsive": True,
         "title":{
             "display":True,
-            "text":"Size: Top 5 Tables"
+            "text":"Master: Replication Lag"
         },
         "tooltips": {
             "mode": "index",
