@@ -1,30 +1,24 @@
 from datetime import datetime
 from random import randint
 
-databases = connection.Query('''
-    SELECT datname AS datname,
-           round(pg_catalog.pg_database_size(datname)/1048576.0,2) AS size
-    FROM pg_catalog.pg_database
-    WHERE NOT datistemplate
-    ORDER BY
-        CASE WHEN pg_catalog.has_database_privilege(datname, 'CONNECT')
-             THEN pg_catalog.pg_database_size(datname)
-             ELSE NULL
-        END DESC
+replags = connection.Query('''
+    SELECT client_addr || '-' || application_name as standby,
+           round(pg_xlog_location_diff(pg_current_xlog_location(),replay_location)/1048576.0,2) AS lag
+    FROM pg_stat_replication
 ''')
 
 datasets = []
-for db in databases.Rows:
+for replag in replags.Rows:
     color = "rgb(" + str(randint(125, 225)) + "," + str(randint(125, 225)) + "," + str(randint(125, 225)) + ")"
     datasets.append({
-            "label": db['datname'],
+            "label": replag['standby'],
             "fill": False,
             "backgroundColor": color,
             "borderColor": color,
             "lineTension": 0,
             "pointRadius": 1,
             "borderWidth": 1,
-            "data": [db["size"]]
+            "data": [replag['lag']]
         })
 
 result = {

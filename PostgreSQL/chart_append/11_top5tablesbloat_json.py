@@ -1,14 +1,11 @@
 result = {
     "type": "line",
-    "data": {
-        "labels": [datetime.now().strftime('%H:%M:%S')],
-        "datasets": datasets
-    },
+    "data": None,
     "options": {
         "responsive": True,
         "title":{
             "display":True,
-            "text":"Bloat: top 5 tables"
+            "text":"Bloat: Top 5 Tables"
         },
         "tooltips": {
             "mode": "index",

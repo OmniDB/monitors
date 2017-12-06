@@ -1,15 +1,12 @@
+total_size = connection.ExecuteScalar('''
+    SELECT round(sum(pg_catalog.pg_database_size(datname)/1048576.0),2)
+    FROM pg_catalog.pg_database
+    WHERE NOT datistemplate
+''')
+
 result = {
     "type": "pie",
-    "data": {
-        "labels": label,
-        "datasets": [
-            {
-                "data": data,
-                "backgroundColor": color,
-                "label": "Dataset 1"
-            }
-        ]
-    },
+    "data": None,
     "options": {
         "responsive": True,
         "title":{

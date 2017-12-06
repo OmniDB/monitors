@@ -1,9 +1,12 @@
+total_size = connection.ExecuteScalar('''
+    SELECT round(sum(pg_catalog.pg_database_size(datname)/1048576.0),2)
+    FROM pg_catalog.pg_database
+    WHERE NOT datistemplate
+''')
+
 result = {
     "type": "line",
-    "data": {
-        "labels": [datetime.now().strftime('%H:%M:%S')],
-        "datasets": datasets
-    },
+    "data": None,
     "options": {
         "responsive": True,
         "title":{

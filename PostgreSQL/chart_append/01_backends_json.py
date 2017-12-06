@@ -1,9 +1,8 @@
+max_connections = connection.ExecuteScalar('SHOW max_connections')
+
 result = {
     "type": "line",
-    "data": {
-        "labels": [datetime.now().strftime('%H:%M:%S')],
-        "datasets": datasets
-    },
+    "data": None,
     "options": {
         "responsive": True,
         "title":{

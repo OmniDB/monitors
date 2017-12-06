@@ -1,4 +1,5 @@
 from datetime import datetime
+from random import randint
 
 cpu_data = connection.ExecuteScalar('''
     CREATE TEMPORARY TABLE omnidb_monitor_result (result TEXT);
@@ -20,30 +21,23 @@ cpu_data = connection.ExecuteScalar('''
     SELECT * FROM omnidb_monitor_result;
 ''')
 
-colors = [
-"rgb(255, 99, 132)",
-"rgb(255, 159, 64)",
-"rgb(255, 205, 86)",
-"rgb(75, 192, 192)",
-"rgb(54, 162, 235)",
-"rgb(153, 102, 255)",
-"rgb(201, 203, 207)"]
-
-cpu_list = []
-color_index = 0
+datasets = []
 for cpu in cpu_data.split('\n'):
     if cpu!='':
         cpu_split = cpu.split(' ')
-        cpu_list.append({
+        color = "rgb(" + str(randint(125, 225)) + "," + str(randint(125, 225)) + "," + str(randint(125, 225)) + ")"
+        datasets.append({
             "label": cpu_split[0],
             "fill": False,
-            "backgroundColor": colors[color_index],
-            "borderColor": colors[color_index],
+            "backgroundColor": color,
+            "borderColor": color,
             "lineTension": 0,
             "pointRadius": 1,
             "borderWidth": 1,
             "data": [cpu_split[1]]
         })
-        color_index = color_index + 1
-        if color_index == len(colors):
-            color_index = 0
+
+result = {
+    "labels": [datetime.now().strftime('%H:%M:%S')],
+    "datasets": datasets
+}

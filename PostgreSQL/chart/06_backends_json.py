@@ -1,15 +1,8 @@
+max_connections = connection.ExecuteScalar('SHOW max_connections')
+
 result = {
     "type": "pie",
-    "data": {
-        "labels": label,
-        "datasets": [
-            {
-                "data": data,
-                "backgroundColor": color,
-                "label": "Dataset 1"
-            }
-        ]
-    },
+    "data": None,
     "options": {
         "responsive": True,
         "title":{

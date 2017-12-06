@@ -5,7 +5,7 @@ result = {
         "responsive": True,
         "title":{
             "display":True,
-            "text":"Size: Top 5 Tables"
+            "text":"Standby: Replication Lag (Time)"
         },
         "tooltips": {
             "mode": "index",
@@ -27,7 +27,7 @@ result = {
                 "display": True,
                 "scaleLabel": {
                     "display": True,
-                    "labelString": "Size (MB)"
+                    "labelString": "Seconds"
                 }
             }]
         }

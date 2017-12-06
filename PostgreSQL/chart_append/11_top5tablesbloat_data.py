@@ -1,4 +1,5 @@
 from datetime import datetime
+from random import randint
 
 tables = connection.Query('''
     SELECT z.schemaname || '.' || z.tablename as relation, sum_wasted/1048576.0 AS size
@@ -56,28 +57,21 @@ tables = connection.Query('''
     LIMIT 5
 ''')
 
-colors = [
-"rgb(255, 99, 132)",
-"rgb(255, 159, 64)",
-"rgb(255, 205, 86)",
-"rgb(75, 192, 192)",
-"rgb(54, 162, 235)",
-"rgb(153, 102, 255)",
-"rgb(201, 203, 207)"]
-
 datasets = []
-color_index = 0
 for table in tables.Rows:
+    color = "rgb(" + str(randint(125, 225)) + "," + str(randint(125, 225)) + "," + str(randint(125, 225)) + ")"
     datasets.append({
             "label": table['relation'],
             "fill": False,
-            "backgroundColor": colors[color_index],
-            "borderColor": colors[color_index],
+            "backgroundColor": color,
+            "borderColor": color,
             "lineTension": 0,
             "pointRadius": 1,
             "borderWidth": 1,
             "data": [table["size"]]
         })
-    color_index = color_index + 1
-    if color_index == len(colors):
-        color_index = 0
+
+result = {
+    "labels": [datetime.now().strftime('%H:%M:%S')],
+    "datasets": datasets
+}
