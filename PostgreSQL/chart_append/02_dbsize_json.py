@@ -11,7 +11,7 @@ result = {
         "responsive": True,
         "title":{
             "display":True,
-            "text":"Database Size (Total: " + str(total_size) + ")"
+            "text":"Database Size (Total: " + str(total_size) + " MB)"
         },
         "tooltips": {
             "mode": "index",
