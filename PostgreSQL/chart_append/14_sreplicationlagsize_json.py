@@ -5,7 +5,7 @@ result = {
         "responsive": True,
         "title":{
             "display":True,
-            "text":"Standby: Replication Lag (size)"
+            "text":"Standby: Replication Lag (Size)"
         },
         "tooltips": {
             "mode": "index",
@@ -28,6 +28,9 @@ result = {
                 "scaleLabel": {
                     "display": True,
                     "labelString": "Size (MB)"
+                },
+                "ticks": {
+                    "beginAtZero": True
                 }
             }]
         }
