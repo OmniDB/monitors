@@ -2,10 +2,13 @@ result = {
     "type": "line",
     "data": None,
     "options": {
+        "legend": {
+            "display": False
+        },
         "responsive": True,
         "title":{
             "display":True,
-            "text":"Master: Replication Lag"
+            "text":"WAL Folder Size"
         },
         "tooltips": {
             "mode": "index",
@@ -27,7 +30,7 @@ result = {
                 "display": True,
                 "scaleLabel": {
                     "display": True,
-                    "labelString": "Size (MB)"
+                    "labelString": "Size(MB)"
                 },
                 "ticks": {
                     "beginAtZero": True

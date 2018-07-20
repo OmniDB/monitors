@@ -1,28 +1,27 @@
 from datetime import datetime
 from random import randint
 
-mem_data = connection.ExecuteScalar('''
-    create temporary table tabela (c1 text);
-    copy tabela from program 'free -m | tail -n +2 | head -n 1 | tr -s " " | cut -f2,3,4 -d " "';
-    select * from tabela;
+duration = connection.ExecuteScalar('''
+    SELECT duration FROM
+    (SELECT EXTRACT(EPOCH FROM(now() - query_start))::INTEGER AS duration FROM pg_stat_activity WHERE state='active'
+    UNION ALL
+    SELECT 0) t
+    WHERE duration is NOT NULL
+    ORDER BY duration DESC
+    LIMIT 1
 ''')
 
 datasets = []
-mem_split = mem_data.split(' ')
-total_mem = mem_split[0]
-used_mem = mem_split[1]
-free_mem = mem_split[2]
-perc_mem = round(int(used_mem)*100/int(total_mem),2)
 color = "rgb(" + str(randint(125, 225)) + "," + str(randint(125, 225)) + "," + str(randint(125, 225)) + ")"
 datasets.append({
-        "label": "Memory",
+        "label": 'Query',
         "fill": False,
         "backgroundColor": color,
         "borderColor": color,
         "lineTension": 0,
         "pointRadius": 1,
         "borderWidth": 1,
-        "data": [perc_mem]
+        "data": [duration]
     })
 
 result = {
