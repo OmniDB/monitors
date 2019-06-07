@@ -2,32 +2,35 @@ from datetime import datetime
 from random import randint
 
 databases = connection.Query('''
-    SELECT datname AS datname,
-           round(pg_catalog.pg_database_size(datname)/1048576.0,2) AS size
-    FROM pg_catalog.pg_database
-    WHERE NOT datistemplate
-    ORDER BY
-        CASE WHEN pg_catalog.has_database_privilege(datname, 'CONNECT')
-             THEN pg_catalog.pg_database_size(datname)
-             ELSE NULL
-        END DESC
+    SELECT d.datname AS datname,
+           round(pg_catalog.pg_database_size(d.datname)/1048576.0,2) AS size
+    FROM pg_catalog.pg_database d
+    WHERE d.datname not in ('template0','template1')
 ''')
 
-datasets = []
+data = []
+color = []
+label = []
+
 for db in databases.Rows:
-    color = "rgb(" + str(randint(125, 225)) + "," + str(randint(125, 225)) + "," + str(randint(125, 225)) + ")"
-    datasets.append({
-            "label": db['datname'],
-            "fill": False,
-            "backgroundColor": color,
-            "borderColor": color,
-            "lineTension": 0,
-            "pointRadius": 1,
-            "borderWidth": 1,
-            "data": [db["size"]]
-        })
+    data.append(db["size"])
+    color.append("rgb(" + str(randint(125, 225)) + "," + str(randint(125, 225)) + "," + str(randint(125, 225)) + ")")
+    label.append(db["datname"])
+
+total_size = connection.ExecuteScalar('''
+    SELECT round(sum(pg_catalog.pg_database_size(datname)/1048576.0),2)
+    FROM pg_catalog.pg_database
+    WHERE NOT datistemplate
+''')
 
 result = {
-    "labels": [datetime.now().strftime('%H:%M:%S')],
-    "datasets": datasets
+    "labels": label,
+    "datasets": [
+        {
+            "data": data,
+            "backgroundColor": color,
+            "label": "Dataset 1"
+        }
+    ],
+    "title": "Database Size (Total: " + str(total_size) + " MB)"
 }

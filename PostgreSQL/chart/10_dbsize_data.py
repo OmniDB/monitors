@@ -17,6 +17,12 @@ for db in databases.Rows:
     color.append("rgb(" + str(randint(125, 225)) + "," + str(randint(125, 225)) + "," + str(randint(125, 225)) + ")")
     label.append(db["datname"])
 
+total_size = connection.ExecuteScalar('''
+    SELECT round(sum(pg_catalog.pg_database_size(datname)/1048576.0),2)
+    FROM pg_catalog.pg_database
+    WHERE NOT datistemplate
+''')
+
 result = {
     "labels": label,
     "datasets": [
@@ -25,5 +31,6 @@ result = {
             "backgroundColor": color,
             "label": "Dataset 1"
         }
-    ]
+    ],
+    "title": "Database Size (Total: " + str(total_size) + " MB)"
 }
